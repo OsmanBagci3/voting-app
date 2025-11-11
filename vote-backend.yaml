@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: vote-backend
+  namespace: vote
+  labels:
+    app: worker
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      app: worker-vote
+  template: 
+    metadata: 
+        labels:
+          app: worker-vote
+    spec:
+      containers:
+      - name: worker-vote
+        image: dockersamples/examplevotingapp_worker
+
+
+    
