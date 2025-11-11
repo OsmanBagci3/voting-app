@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
+  name: db
   namespace: vote
   labels:
     app: db
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: db
-        image: dockersamples/examplevotingapp_vote:before
+        image: postgres:15-alpine
         ports:
         - containerPort: 5432
         env:
@@ -31,4 +31,20 @@ spec:
       volumes:
       - name : postgres-volume
         emptyDir: {}
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  namespace: vote
+spec:
+  type: ClusterIP
+  selector:
+    app: db
+  ports:
+  - protocol: TCP
+    port: 5432
+    targetPort: 5432
         
