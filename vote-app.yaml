@@ -1,0 +1,22 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: examplevotingapp-vote
+  namespace: vote
+  labels:
+    app: nginx
+spec:
+  replicas : 3
+  selector: 
+    matchLabels:
+      app: app-vote
+  template:
+    metadata:
+      labels:
+        app: app-vote
+    spec:
+      containers:
+      - name: app-vote
+        image: dockersamples/examplevotingapp_vote:before
+        ports:
+        - containerPort: 80
